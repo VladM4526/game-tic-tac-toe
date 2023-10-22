@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Tic Tac Toe</title>
+  <link rel="stylesheet" href="./style/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+<body>
+  <div class="game-container">
+    <h1 class="game-title">Game Tic Tac Toe</h1>
+    <div class="playing-field">
+      <ul class="playing-game-list">
+        <li class="playing-game-list-item"><span data-game-points-index="0" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="1" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="2" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="3" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="4" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="5" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="6" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="7" class="game-points"></span></li>
+        <li class="playing-game-list-item"><span data-game-points-index="8" class="game-points"></span></li>
+      </ul>
+    </div>
+    <div class="game-status-container">
+      <a class="game-status-player"></a>
+      <button class="game-reset">Restart</button>
+    </div>
+  </div>
+
+  <script src="./script/core.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/basiclightbox@5.0.4/dist/basicLightbox.min.js"></script>
+</body>
+</html>
