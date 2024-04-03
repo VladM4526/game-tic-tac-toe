@@ -5,11 +5,9 @@ const gameReset = document.querySelector(".game-reset");
 let gameActive = true;
 let currentPlayer = "X";
 let gameInDraw = "Game finished in a draw!";
-const drawMessage = () => `Game finished in a draw!`;
 let gameState = ["", "", "", "", "", "", "", "", ""];
 
 const winMessage = () => `Player ${currentPlayer} has won!`;
-// const
 const currentPlayerTurn = () => `Turn ${currentPlayer}`;
 
 gameStatusPlayer.innerHTML = currentPlayerTurn();
@@ -99,57 +97,33 @@ function resultGame() {
     return;
   }
 
-  let gameRoundDraw = !gameState.includes("");
-  if (gameRoundDraw) {
-    gameStatusPlayer.innerHTML = "";
-    const instance = basicLightbox.create(
-      `<div class="game-modal-overlay animate__bounceIn">
-          <div class="winner-modal-window animate__bounceIn">
-            <h1 class="game-status-title">${gameInDraw}</h1>
-          </div>
-        </div>`,
-      {
-        onShow: (instance) => {
-          document.addEventListener("keydown", onCloseModal);
-        },
-        onClose: (instance) => {
-          document.removeEventListener("keydown", onCloseModal);
-        },
-      }
-    );
-    instance.show();
-    gameActive = false;
-
-    function onCloseModal(evt) {
-      if (evt.code === "Escape") {
-        instance.close();
-      }
-    }
-    restartGame();
-    gameActive = false;
-    return;
-  }
-
   gamePlayerChange();
 }
 
 function gamePlayerChange() {
   currentPlayer = currentPlayer === "X" ? "O" : "X";
   gameStatusPlayer.innerHTML = currentPlayerTurn();
-  if (currentPlayer) {
+  if (gameStatusPlayer) {
     gameReset.style.cursor = "pointer";
     gameReset.disabled = false;
     gameReset.style.background = "#1f79ee";
+  } else {
+    gameReset.style.cursor = "not-allowed";
+    gameReset.disabled = true;
+    gameReset.style.background = "#72A8EE";
   }
 }
 
 function restartGame() {
   gameActive = true;
-  currentPlayer = "X";
   gameState = ["", "", "", "", "", "", "", "", ""];
   gameStatusPlayer.innerHTML = currentPlayerTurn();
   gamePoints.forEach((point) => (point.innerHTML = ""));
-  if (!gameActive === false) {
+  if (gameActive) {
+    gameReset.style.cursor = "not-allowed";
+    gameReset.disabled = true;
+    gameReset.style.background = "#72A8EE";
+  } else {
     gameReset.style.cursor = "not-allowed";
     gameReset.disabled = true;
     gameReset.style.background = "#72A8EE";
