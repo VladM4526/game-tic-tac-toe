@@ -16,10 +16,7 @@ gameReset.style.cursor = "not-allowed";
 gameReset.style.background = "#72A8EE";
 gameReset.disabled = true;
 
-gamePoints.forEach((point) => point.addEventListener("click", gamePointClick));
-gameReset.addEventListener("click", restartGame);
-
-function gamePointClick(clickedCellEvent) {
+const gamePointClick = (clickedCellEvent) => {
   const clickedPoint = clickedCellEvent.target;
   const clickedPointIndex = parseInt(
     clickedPoint.getAttribute("data-game-points-index")
@@ -31,12 +28,16 @@ function gamePointClick(clickedCellEvent) {
 
   pointPlayed(clickedPoint, clickedPointIndex);
   resultGame();
-}
 
-function pointPlayed(clickedPoint, clickedPointIndex) {
+  return clickedPoint;
+};
+
+gamePoints.forEach((point) => point.addEventListener("click", gamePointClick));
+
+const pointPlayed = (clickedPoint, clickedPointIndex) => {
   gameState[clickedPointIndex] = currentPlayer;
   clickedPoint.innerHTML = currentPlayer;
-}
+};
 
 const winningConditions = [
   [0, 1, 2],
@@ -49,7 +50,7 @@ const winningConditions = [
   [2, 4, 6],
 ];
 
-function resultGame() {
+const resultGame = () => {
   let gameRoundWon = false;
 
   for (let i = 0; i <= 7; i += 1) {
@@ -69,6 +70,12 @@ function resultGame() {
   }
 
   if (gameRoundWon) {
+    const onCloseModal = (evt) => {
+      if (evt.code === "Escape") {
+        instance.close();
+      }
+    };
+
     gameStatusPlayer.innerHTML = winMessage();
     const instance = basicLightbox.create(
       `<div class="game-modal-overlay animate__bounceIn">
@@ -81,26 +88,21 @@ function resultGame() {
           document.addEventListener("keydown", onCloseModal);
         },
         onClose: (instance) => {
-          document.removeEventListener("keydown", onCloseModal);
+          document.removeEventListener("click", onCloseModal);
         },
       }
     );
     instance.show();
     gameActive = false;
 
-    function onCloseModal(evt) {
-      if (evt.code === "Escape") {
-        instance.close();
-      }
-    }
     restartGame();
     return;
   }
 
   gamePlayerChange();
-}
+};
 
-function gamePlayerChange() {
+const gamePlayerChange = () => {
   currentPlayer = currentPlayer === "X" ? "O" : "X";
   gameStatusPlayer.innerHTML = currentPlayerTurn();
   if (gameStatusPlayer) {
@@ -112,10 +114,13 @@ function gamePlayerChange() {
     gameReset.disabled = true;
     gameReset.style.background = "#72A8EE";
   }
-}
 
-function restartGame() {
+  return currentPlayer;
+};
+
+const restartGame = () => {
   gameActive = true;
+  currentPlayer = "X";
   gameState = ["", "", "", "", "", "", "", "", ""];
   gameStatusPlayer.innerHTML = currentPlayerTurn();
   gamePoints.forEach((point) => (point.innerHTML = ""));
@@ -128,4 +133,8 @@ function restartGame() {
     gameReset.disabled = true;
     gameReset.style.background = "#72A8EE";
   }
-}
+
+  return gameActive;
+};
+
+gameReset.addEventListener("click", restartGame);
